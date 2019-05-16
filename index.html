@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Tello control by Toma</title>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet" type="text/css">
+    <style>
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head>
+  <body>
+  <main role="main">
+          <!-- <ul id="dronecon"></ul> -->
+    <div class="btn-group-toggle" data-toggle="buttons">
+        
+        <button type="button" class="btn btn-success">takeoff</button>
+        <button type="button" class="btn btn-success">land</button> | 
+
+        <button type="button" class="btn btn-success">up</button>
+        <button type="button" class="btn btn-success">down</button>
+        <button type="button" class="btn btn-success">left</button>
+        <button type="button" class="btn btn-success">right</button> | 
+
+        <button type="button" class="btn btn-success">go</button>
+        <button type="button" class="btn btn-success">back</button>
+        <button type="button" class="btn btn-success">forward</button> | 
+
+        <button type="button" class="btn btn-success">streamon</button>
+        <button type="button" class="btn btn-success">battery?</button>
+        <button type="button" class="btn btn-success">speed?</button>
+        
+
+<br>
+<p>command:</p>
+        <p>command,
+            takeoff,
+            land,
+            up,
+            down,
+            left,
+            go,
+            right,
+            forward,
+            back,
+            cw,
+            ccw,
+            flip,
+            speed,
+            'battery?',
+            'speed?',
+            'time?'</p>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div id="stream-container">
+			
+            <canvas id="videostream" width="360" height="360" style="border:solid;"></canvas>
+      
+          </div>
+        </div>
+        <div class="col">
+          <ul id="messages"></ul>
+        </div>
+      </div>
+    </div>  
+    
+    
+    <form class="form-inline">
+      <div class="form-group mb-2">
+      <input class="form-control" id="m" autocomplete="off" value="" />
+      </div>
+
+      <button type="button" class="btn btn-info sendbtn">Send command</button>
+    </form>
+    <!-- <video src="http://localhost:6767/videostream" width="460" height="306" preload controls autoplay /> -->
+    <!-- <iframe src="http://localhost:6767/videostream" width=500 height=500></iframe> -->
+    <div class="line-it-button" data-lang="zh_Hant" data-type="share-a" data-ver="3" data-url="https://www.ibm.com" data-color="default" data-size="small" data-count="true" style="display: none;"></div>
+ <script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+ <!-- <video id="videoPlayer" controls autoplay>
+  <source src="http://localhost:6767/videostream" type="video/mp4">
+</video>     -->
+</main>
+<script src="/assets/js/socket.io.js"></script>
+<script src="/assets/js/jquery-1.11.1.js"></script>
+<script src="/assets/js/connect.js"></script>
+<script src="/assets/js/face-api.min.js"></script>
+<script>
+  $(function () {
+    var socket = io();
+    $('.sendbtn').click(function(){
+      if($('#m').val() != ''){
+        socket.emit('command', $('#m').val());
+        $('#messages').append($('<li style="color:#777;">').text('command text : '+$('#m').val()));
+        $('#m').val('');
+      }
+    });
+
+    socket.on('dronestate', function(msg){
+      //$('#messages').append($('<li>').text(msg));
+        //console.log(msg);
+    });
+
+    socket.on('status', function(msg){
+      $('#messages').append($('<li style="color:#777;">').text('status : '+msg));
+    });
+
+    $('.btn-success').click(function(){
+      socket.emit('command', $(this).text());
+      $('#messages').append($('<li style="color:#777;">').text('command : '+$(this).text()));
+    });
+
+    // Start function
+    const start = async function(a, b) {
+      const input = document.getElementById('videostream');
+      const detections = await faceapi.detectAllFaces(input);
+      
+      console.log(detections);
+    }
+
+    // Call start
+    start();
+  });
+</script>
+  </body>
+</html>
