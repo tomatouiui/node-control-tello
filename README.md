@@ -1,4 +1,4 @@
-# node-tello
+# node-control-tello
 
 0. 电脑无限连接到tello
 1. npm install
