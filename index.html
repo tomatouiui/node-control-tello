@@ -64,6 +64,7 @@
         </div>
         <div class="col">
           <ul id="messages"></ul>
+          <div id="face"></div>
         </div>
       </div>
     </div>  
@@ -71,7 +72,7 @@
     
     <form class="form-inline">
       <div class="form-group mb-2">
-      <input class="form-control" id="m" autocomplete="off" value="" />
+      <input class="form-control" id="m" autocomplete="off" value="ap tomaios yzk12345" />
       </div>
 
       <button type="button" class="btn btn-info sendbtn">Send command</button>
@@ -106,6 +107,10 @@
 
     socket.on('status', function(msg){
       $('#messages').append($('<li style="color:#777;">').text('status : '+msg));
+    });
+
+    socket.on('faceimg', function(msg){
+      $('#face').append($('<img src="/assets/face/'+msg+'" />'));
     });
 
     $('.btn-success').click(function(){

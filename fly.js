@@ -1,5 +1,5 @@
 const dgram = require('dgram');
-const wait = require('waait');
+//const wait = require('waait');
 const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
@@ -167,6 +167,7 @@ ffmpeg.stdout.on('data', function (data) {
             if(faceImages.length>0){
               faceImages.forEach((img, i) => fr.saveImage(`assets/face/${formattedTime}.png`, img))
               console.log('get a face=========================');
+              io.sockets.emit('faceimg',formattedTime+'.png');
             }
           } catch(e) {
               console.error('Error caught by catch block:', e);

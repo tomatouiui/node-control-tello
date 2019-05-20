@@ -16,6 +16,7 @@ const commandDelays = {
   'battery?': 500,
   'speed?': 500,
   'time?': 500,
+  'ap Tomaiso yzk12345': 5000,
 };
 
 module.exports = commandDelays;

@@ -1,0 +1,4 @@
+# exclude everything
+assets/face/*
+assets/img/*
+node_modules/*
