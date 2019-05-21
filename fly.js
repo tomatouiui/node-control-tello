@@ -180,6 +180,7 @@ ffmpeg.stdout.on('data', function (data) {
   }
 });
 
+//没成功还需要继续研究
 app.get('/videostream', function(req, res){
     res.contentType('video/mp4');
     ffmpeg.stdout.pipe(res);
